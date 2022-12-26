@@ -9,7 +9,7 @@ import { signJwt } from '../utils/jwt.utils';
 import config from 'config';
 import Session from '../models/session.model';
 
-export const createSessionHandler = async (req: Request, res: Response) => {
+export const createUserSessionHandler = async (req: Request, res: Response) => {
 	//Validate the user's password
 
 	const user = await validatePassword(req.body);
@@ -19,7 +19,7 @@ export const createSessionHandler = async (req: Request, res: Response) => {
 	//create a session
 
 	// console.log(user);
-	const session = await createSession('ddddd', req.get('user-agent') || '');
+	const session = await createSession(user._id, req.get('user-agent') || '');
 
 	//crete an access token
 	const accessToken = signJwt(
@@ -43,8 +43,27 @@ export const createSessionHandler = async (req: Request, res: Response) => {
 		}
 	);
 
-	//return an access token and refresh token
+	//storing access token in cookie
+	res.cookie('accessToken', accessToken, {
+		maxAge: 90000, //15 min
+		httpOnly: true, //security feature to access by http
+		domain: 'localhost', //set it in config to access it via a specific domain
+		path: '/',
+		sameSite: 'strict',
+		secure: false, //set a condition that checks for production and sets secure to true so as to access it in https
+	});
 
+	//storing access refresh token in cookie
+	res.cookie('refreshToken', refreshToken, {
+		maxAge: 3.154e10, //1 year
+		httpOnly: true, //security feature to access by http
+		domain: 'localhost', //set it in config to access it via a specific domain
+		path: '/',
+		sameSite: 'strict',
+		secure: false, //set a condition that checks for production and sets secure to true so as to access it in https
+	});
+
+	//return an access token and refresh token
 	return res.send({ accessToken, refreshToken });
 };
 

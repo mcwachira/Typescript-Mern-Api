@@ -1,5 +1,6 @@
 export default {
 	port: 1337,
+	origin: 'http://localhost:3000',
 	dbUri:
 		'mongodb+srv://mcwachira:nokia100@cluster0.mpmvza2.mongodb.net/?retryWrites=true&w=majority',
 	saltWorkFactor: 10,

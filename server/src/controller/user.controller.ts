@@ -4,7 +4,7 @@ import logger from '../utils/logger';
 import { createUser } from '../service/user.service';
 import { CreateUserInput, createUserSchema } from '../schema/user.schema';
 export const createUserHandler = async (
-	req: Request<{}, {}, CreateUserInput['body']>,
+	req: Request<{}, {}, CreateUserInput['body']>, //generic
 	res: Response
 ) => {
 	try {
@@ -18,4 +18,8 @@ export const createUserHandler = async (
 		//conflict
 		return res.status(409).send(error.message);
 	}
+};
+
+export const getCurrentUser = async (req: Request, res: Response) => {
+	return res.send(res.locals.user);
 };
