@@ -8,37 +8,46 @@ const deserializeUser = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const accessToken = get(req, 'headers.authorization', '').replace(
-		/^Bearer\s/,
-		''
-	);
-
-	const refreshToken = get(req, 'headers.x-refresh');
+	const accessToken =
+		get(req, 'cookies.accessToken') ||
+		get(req, 'headers.authorization', '').replace(/^Bearer\s/, '');
 
 	console.log(accessToken);
+
+	const refreshToken =
+		get(req, 'cookies.refreshToken') || get(req, 'headers.x-refresh');
+
 	if (!accessToken) {
 		return next();
 	}
 
 	const { decoded, expired } = verifyJwt(accessToken);
-	console.log(decoded);
+
 	if (decoded) {
 		res.locals.user = decoded;
 		return next();
 	}
 
-	// if (expired && refreshToken) {
-	// 	const newAccessToken = await reIssueAccessToken({ refreshToken });
+	if (expired && refreshToken) {
+		const newAccessToken = await reIssueAccessToken({ refreshToken });
 
-	// 	if (newAccessToken) {
-	// 		res.setHeader('x-access-token', newAccessToken);
-	// 	}
+		if (newAccessToken) {
+			res.setHeader('x-access-token', newAccessToken);
+			res.cookie('accessToken', newAccessToken, {
+				maxAge: 90000, //15 min
+				httpOnly: true, //security feature to access by http
+				domain: 'localhost', //set it in config to access it via a specific domain
+				path: '/',
+				sameSite: 'strict',
+				secure: false, //set a condition that checks for production and sets secure to true so as to access it in https
+			});
+		}
 
-	// 	const results = verifyJwt(newAccessToken as string);
+		const result = verifyJwt(newAccessToken as string);
 
-	// 	res.locals.user = results.decoded;
-	// 	next();
-	// }
+		res.locals.user = result.decoded;
+		return next();
+	}
 
 	return next();
 };
