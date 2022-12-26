@@ -4,9 +4,11 @@ import connect from './utils/connect';
 import logger from './utils/logger';
 import routes from './routes';
 import deserializeUser from './middleware/deserializeUser';
+import createServer from './utils/server';
 //gets port number from config file
 const port = config.get<number>('port');
-const app = express();
+
+const app = createServer();
 
 app.use(express.json());
 app.use(deserializeUser);
@@ -14,5 +16,4 @@ app.use(deserializeUser);
 app.listen(port, async () => {
 	await connect();
 	logger.info(`hello app running on port ${port}`);
-	routes(app);
 });

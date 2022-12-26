@@ -11,7 +11,8 @@ export const createUserHandler = async (
 		const user = await createUser(req.body); // call user service
 
 		//does not work
-		return res.send(omit(user.toJSON()), 'password');
+		// return res.send(omit(user.toJSON()), 'password');
+		return res.send(user);
 	} catch (error: any) {
 		logger.error(error);
 		//conflict

@@ -4,16 +4,13 @@ import { get } from 'lodash';
 import { signJwt, verifyJwt } from '../utils/jwt.utils';
 import { findUser } from './user.service';
 import config from 'config';
+import { FilterQuery, UpdateQuery } from 'mongoose';
 
-export const createSession = async (userId: string, userAgent: string) => {
-	const session = await Session.create({
-		user: userId,
-		userAgent,
-	});
+export async function createSession(userId: string, userAgent: string) {
+	const session = await Session.create({ user: userId, userAgent });
 
-	//why converting to json
 	return session.toJSON();
-};
+}
 
 export async function findSessions(query: FilterQuery<SessionDocument>) {
 	return Session.find(query).lean();
@@ -21,7 +18,7 @@ export async function findSessions(query: FilterQuery<SessionDocument>) {
 
 export async function updateSession(
 	query: FilterQuery<SessionDocument>,
-	update: updateQuery<SessionDocument>
+	update: UpdateQuery<SessionDocument>
 ) {
 	return Session.updateOne(query, update);
 }
@@ -51,4 +48,6 @@ export async function reIssueAccessToken({
 			expiresIn: config.get('accessTokenTtl'), // 15 minutes only
 		}
 	);
+
+	return accessToken;
 }

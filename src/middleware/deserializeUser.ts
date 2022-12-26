@@ -27,18 +27,18 @@ const deserializeUser = async (
 		return next();
 	}
 
-	if (expired && refreshToken) {
-		const newAccessToken = await reIssueAccessToken({ refreshToken });
+	// if (expired && refreshToken) {
+	// 	const newAccessToken = await reIssueAccessToken({ refreshToken });
 
-		if (newAccessToken) {
-			res.setHeader('x-access-token', newAccessToken);
-		}
+	// 	if (newAccessToken) {
+	// 		res.setHeader('x-access-token', newAccessToken);
+	// 	}
 
-		const results = verifyJwt(newAccessToken);
+	// 	const results = verifyJwt(newAccessToken as string);
 
-		res.locals.user = results.decoded;
-		next();
-	}
+	// 	res.locals.user = results.decoded;
+	// 	next();
+	// }
 
 	return next();
 };

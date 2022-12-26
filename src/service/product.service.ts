@@ -1,8 +1,13 @@
-import { DocumentDefinition, QueryOptions } from 'mongoose';
+import {
+	FilterQuery,
+	DocumentDefinition,
+	QueryOptions,
+	UpdateQuery,
+} from 'mongoose';
 import Product, { ProductDocument } from '../models/product.model';
 export const createProduct = async (
 	input: DocumentDefinition<
-		Omit<ProductDocument, 'createdAt' | 'updatedAt' | 'comparePassword'>
+		Omit<ProductDocument, 'createdAt' | 'updatedAt' | 'productId'>
 	>
 ) => {
 	return Product.create(input);
@@ -17,7 +22,7 @@ export const findProduct = async (
 
 export const updateProduct = async (
 	query: FilterQuery<ProductDocument>,
-	update: updateQuery<ProductDocument>,
+	update: UpdateQuery<ProductDocument>,
 	options: QueryOptions
 ) => {
 	return Product.findOneAndUpdate(query, update, options);
