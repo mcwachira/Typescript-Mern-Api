@@ -9,7 +9,7 @@ import { signJwt } from '../utils/jwt.utils';
 import config from 'config';
 import Session from '../models/session.model';
 
-export const createSessionHandler = async (req: Request, res: Response) => {
+export const createUserSessionHandler = async (req: Request, res: Response) => {
 	//Validate the user's password
 
 	const user = await validatePassword(req.body);
