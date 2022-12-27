@@ -1,3 +1,5 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 export default {
 	port: 1337,
 	origin: 'http://localhost:3000',
@@ -28,4 +30,8 @@ s7WY9TPPxUSJHC+m33uTAo5BtMiwrLDqdUx8dfPUTkKAmQtY4dYsdeKl6pc83LaO
 n54kWvkJdTyWpBj9AwJAFY7cdypiXrjzRDvvHD10ypuZDvQ/7tjc6xJJgRGi2WyY
 PqM83D7vMcuPbZP6EAZxgEoNrWTqgmUrs5sOWLSBeg==
 -----END RSA PRIVATE KEY-----`,
+
+	googleClientId: process.env.G00GLE_CLIENT_ID,
+	googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+	googleOauthRedirectUrl: process.env.GOOGLE_OAUTH_REDIRECT_URL,
 };
