@@ -6,9 +6,12 @@ import deserializeUser from '../middleware/deserializeUser';
 import routes from '../routes';
 import { starrMetricsServer, restResponseTimeHistogram } from './metrics';
 import responseTime from 'response-time';
+import swaggerDocs from './swagger';
 
 const createServer = () => {
 	const app = express();
+
+	const port = config.get<number>('port');
 
 	app.use(
 		cors({
@@ -42,6 +45,8 @@ const createServer = () => {
 	routes(app);
 
 	starrMetricsServer();
+
+	swaggerDocs(app, port);
 
 	return app;
 };

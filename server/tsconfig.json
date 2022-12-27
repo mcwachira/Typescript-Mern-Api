@@ -3,7 +3,7 @@
 		"outDir": "build",
 		"target": "es5",
 		"module": "commonjs",
-		"resolveJsonModule": true,
+		"resolveJsonModule": true, //importing json files
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
