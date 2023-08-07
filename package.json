@@ -1,5 +1,5 @@
 {
-  "name": "Typescript-Mern-Api",
+  "name": "typescript-mern-api",
   "version": "1.0.0",
   "description": "![Design preview for the Typescript Mern app](./design/desktop-preview.jpg)",
   "main": "index.js",
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/mcwachira/Typescript-Mern-Api#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "colors": "^1.4.0",
     "config": "^3.3.9",
     "cors": "^2.8.5",
     "dayjs": "^1.11.9",
