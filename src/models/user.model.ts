@@ -2,11 +2,39 @@ import mongoose  from "mongoose";
 import bcrypt from 'bcrypt'
 import config from 'config'
 
-export interface UserDocument extends mongoose.Document{
+
+
+const userSchema = new mongoose.Schema({
+        email: {
+            type: String,
+            require: true,
+            unique: true,
+        },
+        name: {
+            type: String,
+            require: true,
+
+        },
+
+        password:{
+            type:String,
+            require:true,
+
+        }
+    },
+    {
+        timestamps:true
+    }
+)
+export interface UserInput  {
     email:string;
     name:string;
     password:string;
-    createdAT:Date;
+}
+
+
+export interface UserDocument extends UserInput,  mongoose.Document{
+    createdAt:Date;
     updatedAt:Date;
     comparePassword(candidatePassword: string): Promise<Boolean>;
 
@@ -15,28 +43,7 @@ export interface UserDocument extends mongoose.Document{
 
 
 const saltWorkFactor = config.get<number>('saltWorkFactor')
-const userSchema = new mongoose.Schema({
-    email: {
-        type: String,
-        require: true,
-        unique: true,
-    },
-    name: {
-        type: String,
-        require: true,
 
-    },
-
-    password:{
-        type:String,
-        require:true,
-
-    }
-    },
-    {
-        timestamps:true
-}
-)
 
 
 userSchema.pre("save", async function (next) {

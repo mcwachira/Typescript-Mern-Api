@@ -15,6 +15,12 @@ console.log(port)
 
 const app = express()
 
+
+// for parsing application/json
+app.use(express.json({ limit: "30mb", extended: true }))
+// for parsing application/x-www-form-urlencoded /form data
+app.use(express.urlencoded({ limit: "30mb", extended: true }))
+
 app.listen(port, async () => {
     logger.info(`app running on port ${port}`)
     await connect()
