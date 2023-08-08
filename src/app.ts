@@ -4,6 +4,7 @@ import connect from "./utils/connect";
 import logger from "./utils/logger";
 import dotenv from "dotenv"
 import routes from "./routes";
+import deserializeUser from "./middleware/deserializeUser";
 
 dotenv.config()
 
@@ -16,11 +17,15 @@ console.log(port)
 const app = express()
 
 
+
+
 // for parsing application/json
 app.use(express.json({ limit: "30mb", extended: true }))
 // for parsing application/x-www-form-urlencoded /form data
 app.use(express.urlencoded({ limit: "30mb", extended: true }))
 
+
+app.use(deserializeUser)
 app.listen(port, async () => {
     logger.info(`app running on port ${port}`)
     await connect()
