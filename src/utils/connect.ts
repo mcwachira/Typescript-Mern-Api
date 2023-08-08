@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import colors from 'colors'
 import config from 'config'
+import logger from "./logger";
 
 
 const dbUri = config.get<string>('dbUri');
@@ -14,10 +15,10 @@ const dbUri = config.get<string>('dbUri');
 
         })
 
-        console.log(`MongoDb  connected ${connect.connection.host}`.underline.blue)
+        logger.info(`MongoDb  connected ${connect.connection.host}`)
     } catch (error) {
-        console.log(error)
-        console.log(`could not connect to database`.underline.red.bold)
+        logger.error(error)
+        logger.error(`could not connect to database`)
         process.exit(1)
     }
 
