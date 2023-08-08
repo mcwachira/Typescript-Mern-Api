@@ -3,20 +3,21 @@ import colors from 'colors'
 import config from 'config'
 
 
- const connect = async () => {
+const dbUri = config.get<string>('dbUri');
 
-    const dbUri = config.get<string>('dbUri');
+ const connect = async () => {
 
     try {
         const connect = await mongoose.connect(dbUri, {
             // useNewUrlParser: true,
             // useUnifiedTopology: true,
-           j
+
         })
 
-        console.log(`MongoDb  connected ${connect.connection.host}`.blue.underline)
+        console.log(`MongoDb  connected ${connect.connection.host}`.underline.blue)
     } catch (error) {
-        console.log(`error :${error.messages}`.red.underline.bold)
+        console.log(error)
+        console.log(`could not connect to database`.underline.red.bold)
         process.exit(1)
     }
 
