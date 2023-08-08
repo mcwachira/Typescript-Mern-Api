@@ -6,6 +6,7 @@ import {createSessionHandler, deleteSessionHandler, getUserSessionsHandler} from
 import {createSessionSchema} from "./schema/session.schema";
 import requireUser from "./middleware/requireUser";
 
+
 const routes = (app:Express) => {
 
     app.get('/healthcheck', (req:Request, res:Response) => res.sendStatus(200))
@@ -20,7 +21,6 @@ const routes = (app:Express) => {
     app.delete("/api/sessions", requireUser, deleteSessionHandler);
 
 
-}
 
 
 export default routes;
