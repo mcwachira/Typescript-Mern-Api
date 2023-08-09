@@ -5,6 +5,7 @@ import logger from "./utils/logger";
 import dotenv from "dotenv"
 import routes from "./routes";
 import deserializeUser from "./middleware/deserializeUser";
+import {pinoHttp} from "pino-http";
 
 dotenv.config()
 
@@ -16,6 +17,11 @@ console.log(port)
 
 const app = express()
 
+app.use(
+    pinoHttp({
+        logger,
+    })
+);
 
 
 
