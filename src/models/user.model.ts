@@ -56,7 +56,7 @@ userSchema.pre("save", async function (next) {
 
 
     const salt = await bcrypt.genSalt(saltWorkFactor);
-    const hash = await bcrypt.hashSync(user.password, salt);
+    const hash =  bcrypt.hashSync(user.password, salt);
     user.password = hash
 
     return next()
@@ -73,6 +73,8 @@ userSchema.methods.comparePassword = async function (
 };
 
 
+
+//UserDocument is a generic type
 const User = mongoose.model<UserDocument>("User", userSchema);
 
 export default User

@@ -1,5 +1,5 @@
 import { FilterQuery, QueryOptions, UpdateQuery } from "mongoose";
-import ProductModel, {
+import Product, {
     ProductDocument,
     ProductInput,
 } from "../models/product.model";
@@ -8,7 +8,7 @@ import ProductModel, {
 export async function createProduct(input: ProductInput) {
 
     try {
-        const result = await ProductModel.create(input);
+        const result = await Product.create(input);
 
         return result;
     } catch (e) {
@@ -27,7 +27,7 @@ export async function findProduct(
 
     // const timer = databaseResponseTimeHistogram.startTimer();
     try {
-        const result = await ProductModel.findOne(query, {}, options);
+        const result = await Product.findOne(query, {}, options);
 
         return result;
     } catch (e) {
@@ -42,9 +42,9 @@ export async function findAndUpdateProduct(
     update: UpdateQuery<ProductDocument>,
     options: QueryOptions
 ) {
-    return ProductModel.findOneAndUpdate(query, update, options);
+    return Product.findOneAndUpdate(query, update, options);
 }
 
 export async function deleteProduct(query: FilterQuery<ProductDocument>) {
-    return ProductModel.deleteOne(query);
+    return Product.deleteOne(query);
 }
