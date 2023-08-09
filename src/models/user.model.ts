@@ -49,6 +49,7 @@ const saltWorkFactor = config.get<number>('saltWorkFactor')
 userSchema.pre("save", async function (next) {
     let user = this as UserDocument;
 
+    // only hash the password if it has been modified (or is new)
     if (!user.isModified('password')) {
         return next();
     }
@@ -61,6 +62,8 @@ userSchema.pre("save", async function (next) {
     return next()
 });
 
+
+// Used for logging in
 userSchema.methods.comparePassword = async function (
     candidatePassword: string
 ): Promise<boolean> {
