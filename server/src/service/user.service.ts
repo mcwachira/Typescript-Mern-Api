@@ -10,6 +10,7 @@ import config from 'config';
 import axios from 'axios';
 import qs from 'qs';
 import log from '../utils/logger';
+import { Request, Response } from 'express';
 
 export const createUser = async (
 	input: DocumentDefinition<
